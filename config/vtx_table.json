@@ -1,5 +1,5 @@
 {
-    "description": "Betaflight VTX Config file for Eachine TX805 (Unlocked/Global version)",
+    "description": "Betaflight VTX Config file for Drone (legal frequencies and bands)",
     "version": "1.0",
     "vtx_table": {
         "bands_list": [
@@ -38,14 +38,14 @@
                 "letter": "E",
                 "is_factory_band": true,
                 "frequencies": [
-                    5705,
-                    5685,
-                    5665,
-                    5645,
-                    5885,
-                    5905,
-                    5925,
-                    5945
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
                 ]
             },
             {
@@ -60,7 +60,7 @@
                     5820,
                     5840,
                     5860,
-                    5880
+                    0
                 ]
             },
             {
@@ -68,14 +68,14 @@
                 "letter": "R",
                 "is_factory_band": true,
                 "frequencies": [
-                    5658,
-                    5695,
+                    0,
+                    0,
                     5732,
                     5769,
                     5806,
                     5843,
-                    5880,
-                    5917
+                    0,
+                    0
                 ]
             }
         ],
