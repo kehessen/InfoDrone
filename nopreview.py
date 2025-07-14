@@ -49,5 +49,5 @@ while True:
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     faces = face_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=5, minSize=(30, 30))
     current_offset = get_offset(faces)
-    GPIO.output(PI_SHOOT, GPIO.LOW if not current_offset[0] is None else GPIO.HIGH)# for some reason it's inverted???
+    GPIO.output(PI_SHOOT, GPIO.LOW if not current_offset[0] is None else GPIO.HIGH)# for some reason it's inverted on the relais???
     print(f"current offset: {current_offset}, GPIO_SHOOT: {'HIGH' if GPIO.input(PI_SHOOT) else 'LOW'}")

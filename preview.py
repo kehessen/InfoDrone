@@ -17,14 +17,10 @@ face_cascade = cv2.CascadeClassifier('haarcascades/haarcascade_frontalface_defau
 
 picam2 = Picamera2()
 config = picam2.create_preview_configuration(main={"format": "RGB888", "size": (640, 480)})
-# picam2.set_controls({"FrameDurationLimits": (66666, 66666)})
 
 picam2.configure(config)
 picam2.start()
 
-# cap = cv2.VideoCapture(0)
-# cam_width = int(cap.get(3))
-# cam_height = int(cap.get(4))
 # change depending on camera pos
 center_pos = (int(640 / 2), int(480 / 2))
 
@@ -39,11 +35,7 @@ GPIO.setmode(GPIO.BOARD)
 GPIO.setup(PI_SHOOT, GPIO.OUT, initial=GPIO.LOW)
 
 # depends on camera resolution
-# px_per_step = 15
-
-# if not cap.isOpened():
-#     print("Error: Could not open camera.")
-#     exit()
+# px_per_step = 8
 
 
 # negative steps to go the other direction
@@ -90,13 +82,6 @@ def draw_and_get_offset(faces):
 
 
 while True:
-    # USB camera:
-    # ret, frame = cap.read()
-    # if not ret:
-    #     print("Error: Failed to capture frame.")
-    #     break
-
-    # pi camera:
     frame = picam2.capture_array()
     frame = cv2.flip(frame, -1)
 
@@ -104,11 +89,10 @@ while True:
     faces = face_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=4, minSize=(30, 30))
     current_offset = draw_and_get_offset(faces)
     print(f"current offset: {current_offset}, GPIO_SHOOT: {'HIGH' if GPIO.input(PI_SHOOT) else 'LOW'}")
-    GPIO.output(PI_SHOOT, GPIO.LOW if not current_offset[0] is None else GPIO.HIGH)
+    GPIO.output(PI_SHOOT, GPIO.LOW if not current_offset[0] is None else GPIO.HIGH)# for some reason it's inverted on the relais???
     cv2.imshow('Face Detection', frame)
 
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 
-# cap.release()
 cv2.destroyAllWindows()
