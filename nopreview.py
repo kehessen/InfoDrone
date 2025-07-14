@@ -1,7 +1,7 @@
 import cv2
 import RPi.GPIO as GPIO
 from picamera2 import Picamera2
-
+import time
 
 # this is the version used for the final implementation
 
@@ -15,9 +15,9 @@ picam2.start()
 center_pos = (int(640 / 2), int(480 / 2))
 current_offset = (None, None)
 
-PI_SHOOT = 36
+PI_SHOOT = 7
 GPIO.setmode(GPIO.BOARD)
-GPIO.setup(PI_SHOOT, GPIO.OUT, initial=GPIO.LOW)
+GPIO.setup(PI_SHOOT, GPIO.OUT, initial=GPIO.HIGH)
 
 
 def get_target(faces):
@@ -49,5 +49,5 @@ while True:
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     faces = face_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=5, minSize=(30, 30))
     current_offset = get_offset(faces)
-    GPIO.output(PI_SHOOT, GPIO.LOW if current_offset[0] is None else GPIO.HIGH)
+    GPIO.output(PI_SHOOT, GPIO.LOW if not current_offset[0] is None else GPIO.HIGH)# for some reason it's inverted???
     print(f"current offset: {current_offset}, GPIO_SHOOT: {'HIGH' if GPIO.input(PI_SHOOT) else 'LOW'}")

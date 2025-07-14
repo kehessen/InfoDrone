@@ -33,11 +33,9 @@ current_offset = (None, None)
 # GPIO pins
 # PI_STEP = 11
 # PI_DIR = 13
-PI_SHOOT = 36
+PI_SHOOT = 7
 
 GPIO.setmode(GPIO.BOARD)
-GPIO.setup(PI_SHOOT, GPIO.OUT, initial=GPIO.LOW)
-
 GPIO.setup(PI_SHOOT, GPIO.OUT, initial=GPIO.LOW)
 
 # depends on camera resolution
@@ -106,7 +104,7 @@ while True:
     faces = face_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=4, minSize=(30, 30))
     current_offset = draw_and_get_offset(faces)
     print(f"current offset: {current_offset}, GPIO_SHOOT: {'HIGH' if GPIO.input(PI_SHOOT) else 'LOW'}")
-    GPIO.output(PI_SHOOT, GPIO.LOW if current_offset[0] is None else GPIO.HIGH)
+    GPIO.output(PI_SHOOT, GPIO.LOW if not current_offset[0] is None else GPIO.HIGH)
     cv2.imshow('Face Detection', frame)
 
     if cv2.waitKey(1) & 0xFF == ord('q'):
